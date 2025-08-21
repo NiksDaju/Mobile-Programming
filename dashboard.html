@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - MyFinance Manager</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Give charts some space and default height */
+    #pieChart, #barChart { max-width: 520px; width: 100%; height: 320px; margin: 0 auto; }
+
+    /* Simple table styling */
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+    th, td { padding: 8px 10px; border: 1px solid #ddd; text-align: left; }
+    thead { background: #f5f5f5; }
+
+    /* Buttons */
+    .btn { padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; background: #3f51b5; color: #fff; }
+    .btn.small { padding: 6px 10px; font-size: 0.9rem; }
+    .btn.red { background: #e53935; }
+    .btn.gray { background: #607d8b; }
+    .btn.green { background: #43a047; }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 16px; }
+    .top-buttons { display: flex; gap: 8px; margin-bottom: 12px; }
+    .budget-container { display: flex; gap: 8px; align-items: center; margin: 12px 0; }
+    .export-buttons { display: flex; gap: 8px; margin: 12px 0; }
+    .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+
+    input, select { padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
+
+    /* Dark mode base (the rest lives in CSS file section below) */
+    body.dark-mode thead { background: #2a2a2a; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="titleText">MyFinance Dashboard</h1>
+
+    <!-- Top Buttons -->
+    <div class="top-buttons">
+      <button id="langToggle" class="btn small">नेपाली</button>
+      <button id="darkToggle" class="btn small gray">Dark Mode</button>
+      <button id="logoutBtn" class="btn small red">Logout</button>
+    </div>
+
+    <!-- Budget -->
+    <div class="budget-container">
+      <input id="budgetInput" type="number" placeholder="Set Monthly Budget" />
+      <button id="setBudgetBtn" class="btn small green">Set Budget</button>
+    </div>
+
+    <!-- Summary -->
+    <div class="summary row">
+      <p><strong id="totalIncomeLabel">Total Income: NPR</strong> <span id="totalIncome">0</span></p>
+      <p><strong id="totalExpensesLabel">Total Expenses: NPR</strong> <span id="totalExpenses">0</span></p>
+      <p><strong id="balanceLabel">Balance: NPR</strong> <span id="balance">0</span></p>
+    </div>
+
+    <!-- Add Transaction -->
+    <h3 id="addTitle">Add Transaction</h3>
+    <div class="row">
+      <input id="amount" type="number" placeholder="Amount" />
+      <select id="type">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+      <select id="category"></select>
+      <button class="btn" id="addBtn">Add</button>
+    </div>
+
+    <!-- Manual Category Add -->
+    <div class="row" style="margin-top: 10px;">
+      <input id="newCategory" type="text" placeholder="New Category" />
+      <button id="addCategoryBtn" class="btn small">Add Category</button>
+    </div>
+
+    <!-- Export buttons -->
+    <div class="export-buttons">
+      <button class="btn small" id="exportCSV">Export CSV</button>
+      <button class="btn small" id="exportPDF">Export PDF</button>
+    </div>
+
+    <!-- Charts -->
+    <h3 id="chartsTitle">Charts</h3>
+    <canvas id="pieChart"></canvas>
+    <canvas id="barChart" style="margin-top: 20px;"></canvas>
+
+    <!-- Transaction Details -->
+    <h3 id="detailsTitle" style="margin-top: 18px;">Transaction Details</h3>
+    <table id="transactionTable">
+      <thead>
+        <tr>
+          <th id="thType">Type</th>
+          <th id="thCategory">Category</th>
+          <th id="thAmount">Amount (NPR)</th>
+          <th id="thDate">Date</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- App code -->
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
